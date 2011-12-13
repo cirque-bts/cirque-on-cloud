@@ -1,0 +1,17 @@
+webapp:
+    type: perl
+    approot: webapp
+    environment: 
+        DEPLOY_ENV: dotcloud
+        DEPLOY_HOME: /home/dotcloud/current
+        PLACK_ENV: deployment
+jsonrpc:
+    type: perl
+    approot: jsonrpc
+    environment: 
+        DEPLOY_ENV: dotcloud
+        DEPLOY_HOME: /home/dotcloud/current
+        PLACK_ENV: deployment
+db:
+    type: mysql
+

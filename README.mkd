@@ -1,0 +1,22 @@
+# README
+
+This is a documentation for tool installing cirque-bts on dotcloud.
+
+## DEPLOY
+
+    git clone git://github.com/cirque-bts/cirque-on-cloud.git
+    cd cirque-on-cloud
+    ./setup
+    dotcloud push --all your-app-name .
+
+Afterwards, you can access to webapp.
+
+## START USING IT
+
+### LOGIN  
+
+Default account is "member@example.com" and it's password is "password".
+
+You may change it by editing a config-file(webapp/etc/authorized_members.pl).
+
+

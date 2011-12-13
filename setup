@@ -1,0 +1,28 @@
+#!/bin/sh
+
+SRCDIR="src"
+BASEDIR=$(pwd)
+
+if [ ! -d $SRCDIR ]; then
+    git clone git://github.com/cirque-bts/cirque.git $SRCDIR
+    cd $SRCDIR
+    git checkout -b topic/try-dotcloud
+    git pull origin topic/try-dotcloud
+    cd $BASEDIR
+fi
+
+rsync -a --delete --exclude .git* --exclude .gitignore $SRCDIR/* webapp/
+rsync -a --exclude .git* --exclude .gitignore misc webapp/
+cp webapp/etc/app.psgi webapp/app.psgi
+rsync -a --delete --exclude .git* --exclude .gitignore $SRCDIR/* jsonrpc/
+cp jsonrpc/etc/jsonrpc/app.psgi jsonrpc/app.psgi
+
+cp -av webapp.postinstall webapp/postinstall
+cp -av webapp.nginx.conf webapp/nginx.conf
+cp -av jsonrpc.nginx.conf jsonrpc/nginx.conf
+
+echo ""
+echo "READY TO DEPLOYING BY FOLLOWING COMMAND."
+echo ""
+echo "  dotcloud push --all YOURAPPNAME ./"
+echo ""

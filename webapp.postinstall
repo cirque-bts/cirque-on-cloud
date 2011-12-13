@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "****** POSTINSTALL STARTED ******"
+
+DEPLOY_CURRENT=$HOME/current
+JSONRPC_CREDENTIALS=$DEPLOY_CURRENT/etc/jsonrpc_credentials.pl
+
+### create database
+$DEPLOY_CURRENT/misc/dotcloud_db_setup.pl 
+$DEPLOY_CURRENT/bin/cirqued --setup
+echo " Database is ready."
+
+### create jsonrpc-credentials file and servicer-account
+if [ ! -e $JSONRPC_CREDENTIALS ]; then
+    $DEPLOY_CURRENT/bin/cirqueadmin servicer create --id=cirque --name=cirque &&
+        $DEPLOY_CURRENT/bin/cirqueadmin servicer info cirque --format=perl > $JSONRPC_CREDENTIALS &&
+        echo ' JSON-RPC credentials file was created.'
+fi
+
+echo "****** POSTINSTALL WAS FINISHED ******"
+
